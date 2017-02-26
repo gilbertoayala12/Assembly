@@ -1,7 +1,7 @@
 ; holamundo.asm
 ; imprime "hola mundo"
-; autor: yo mero
-; fecha: 13 de setpiembre de 2016
+; autor: Gilberto Ayala
+; fecha: 23 de febrero de 2017
 section .data
 	msj DB 'Hola mundo!', 0xA,0x0 ;mensaje a imprimir je
 	lon EQU $ - msj ; longitud del mensaje
