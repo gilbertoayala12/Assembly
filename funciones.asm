@@ -51,6 +51,35 @@ sprintLF:
 	pop EAX			; recuperamos el valor original
 	ret 			; return
 
+iprint:
+	push 	EAX 	; salvamos eax en el stack (acomulador)
+	push 	ECX 	; salvamos exc en el stack(contador)
+	push 	EDX 	; salvamos edx en el stack (base)
+	push 	ESI 	; salvamos esi en el stach (source index)
+	mov 	ECX,0 	; vamos a contar cuantos bytes necesitamos imprimir 
+
+dividirloop:
+	inc 	ECX 	; incrementamos en 1 ECX
+	mov 	EDX,0	; limpiamos EDX
+	mov 	ESI,10 	; guardamos 10 en esi, vamos a dividir entre 10
+	idiv 	ESI		; divide eax entre esi
+	add 	EDX,48	; agraga el caracter 49 "0"
+	push 	EDX 	; la representacion de ascii de nuestro numero
+	cmp 	EAX, 0	; se puede dividir mas el numero entero?
+	jnz 	dividirloop ; jump if not zero
+
+imprimirloop:
+	dec 	ECX 	; vamos a contar hacia abajo cada byte en el stack
+	mov 	EAX,ESP	; apuntador del stack a eax
+	call 	sprint 	; llamamos a la funcion sprint
+	pop 	EAX 	;removemos el ultimo caracter del stack
+	cmp 	ECX,0 	;ya imprimimos todos los valores del stack?
+	jnz 	imprimirloop ; todavia hay numeros que imprimir?
+	pop 	ESI		; restablecemos el valor de esi
+	pop 	EDX 	; restablecemos el valor de edx
+	pop 	ECX		; restablecemos el valor de ECX
+	pop 	EAX 	; restablecemos el valor de EAX
+	ret
 
 quit:
 	mov EAX, sys_exit ; sys_exit
