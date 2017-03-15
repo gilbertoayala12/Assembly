@@ -20,7 +20,7 @@ finalizar:
 	sub EAX , EBX ; restamos al vvalor incial
 	pop EBX ; Establecer ebx
 	ret ; regresar al punto en el que salto/
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; van juntos compa;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 sprint:
 	push EDX 		; salvamos valor de edx
 	push ECX 		; salvamos el valor de ecx
@@ -51,6 +51,18 @@ sprintLF:
 	pop EAX			; recuperamos el valor original
 	ret 			; return
 
+iprintLF:
+	call iprint 	; imprimios el numero
+	push EAX		; salvamos el dato que traemos en ele stack
+
+	mov EAX, 0xA	; copaimos el line feed a eax
+	push EAX		; salvamos line feed
+	mov EAX, ESP 	;copiamos el apuntador del stack 
+	call sprint 	;imprimimos el line feed
+	pop EAX			; removemos el linefeed del stack
+	pop EAX 		; restablecemos le dato que traimaos
+	ret
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; van juntos compa;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 iprint:
 	push 	EAX 	; salvamos eax en el stack (acomulador)
 	push 	ECX 	; salvamos exc en el stack(contador)
@@ -80,8 +92,48 @@ imprimirloop:
 	pop 	ECX		; restablecemos el valor de ECX
 	pop 	EAX 	; restablecemos el valor de EAX
 	ret
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; van juntos compa;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+
+atoi:
+
+	push EBX		;preservamos ebx
+	push ECX		;preservamos ecx
+	push EDX		;preservamos edc
+	push ESI		;preservamos ESI
+	mov ESI,EAX		;nuestro numero a convertir va a convertir
+	mov EAX,0		;inicializamos a cero eax
+	mov ECX,0 		;inicializamos a cero ecx
+
+	ciclomult:
+		xor EBX,EBX	; reseteamos a 0 ebx,
+		mov bl,[ESI+ECX] ;movemos un solo byte
+		cmp bl, 48 		;comparamos con ascii 0
+		jl finalizando  ;  si es menor, saltamos a final 
+		cmp bl, 57		; comparamos con ascii 9
+		jg finalizando ; si es mayor saltamos a finalizando
+		cmp bl,10 ;comparamos con linefeed
+		je finalizando ; si es igual saltamos a finalizando
+		cmp bl, 0 	; comparamos con caracter null
+		jz finalizando ; si es cero saltamos a finalizando
+		sub bl, 48 	; convertimos el caracter en entero
+		add eax, ebx ; agreagamos el calor de eax
+		mov ebx,10 	; movemos el valor decimal 10 a ebx
+		mul ebx 	; multiplicamos eax por ebc
+		inc ecx	; incrementamos ecx(contador)
+		jmp ciclomult;seguimos con nuestro ciclo de mult
+
+		finalizando:
+		mov ebx,10 	; movemos el balor deciaml 10 a ebx
+		div ebx		; dividimos eax entre 10
+		pop esi 	; reestablecemos esi
+		pop edx		; restablcemos edx
+		pop ecx		; restablcemos ecx
+		pop ebx 	; restablecemos ebx
+		ret
+		
 quit:
-	mov EAX, sys_exit ; sys_exit
+	mov EAX, sys_exit 	; sys_exit
 
-	int 0x80 ; llamada a kernels 
+	int 0x80 			; llamada a kernels 
