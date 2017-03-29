@@ -4,6 +4,8 @@
 
 section .text
 	GLOBAL _start
+section .Data
+	msj DB 'El promedio es: ', 0x0
 
 _start:
 	pop ECX				;obtenemos numero de argumentos
@@ -19,11 +21,13 @@ ciclo:
 	dec ecx
 	cmp ecx,0
 	jnz ciclo
+	mov eax, msj
+	call sprint
 	mov EAX,EBX			; mueve el resultado de la suma a eax
 	mov ecx, edx		; mueve el numero de argumentos a ecx 
 	mov edx, 0			; dejamos edx en 0
 	idiv ecx			; multiplica idiv divide eax entre lo que le pases 
-	
+
 	call iprintLF 		; print argumento
 
 	jmp quit
