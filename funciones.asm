@@ -20,7 +20,7 @@ finalizar:
 	sub EAX , EBX ; restamos al vvalor incial
 	pop EBX ; Establecer ebx
 	ret ; regresar al punto en el que salto/
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; van juntos compa;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 sprint:
 	push EDX 		; salvamos valor de edx
 	push ECX 		; salvamos el valor de ecx
@@ -92,12 +92,8 @@ imprimirloop:
 	pop 	ECX		; restablecemos el valor de ECX
 	pop 	EAX 	; restablecemos el valor de EAX
 	ret
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;; van juntos compa;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
 
 atoi:
-
 	push EBX		;preservamos ebx
 	push ECX		;preservamos ecx
 	push EDX		;preservamos edc
@@ -122,7 +118,7 @@ atoi:
 		mov ebx,10 	; movemos el valor decimal 10 a ebx
 		mul ebx 	; multiplicamos eax por ebc
 		inc ecx	; incrementamos ecx(contador)
-		jmp ciclomult;seguimos con nuestro ciclo de mult
+		jmp ciclomult  ;seguimos con nuestro ciclo de mult
 
 		finalizando:
 		mov ebx,10 	; movemos el balor deciaml 10 a ebx
@@ -132,7 +128,8 @@ atoi:
 		pop ecx		; restablcemos ecx
 		pop ebx 	; restablecemos ebx
 		ret
-		
+
+
 quit:
 	mov EAX, sys_exit 	; sys_exit
 
