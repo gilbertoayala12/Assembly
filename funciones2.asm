@@ -124,6 +124,22 @@ ftoc:
 	pop EBX 	; popeamos el registro
 	pop EDX		; same 
 	ret
+; recibe grados celsius en eax formula F= ((C + 32)*9)/5
+ctof:
+	imul eax, 9 
+	push edx
+	mov edx,0
+	push ebx
+	mov ebx, 5
+	div ebx
+	pop ebx
+	pop edx
+	add eax, 32
+	ret
+
+
+
+
 
 
 quit:
