@@ -1,8 +1,12 @@
+; faranheit to celsius
+; gilberto ayala 
 
 %include 'funciones2.asm'
 section .data
 	
-	msg DB "El promedio es: ", 0x0
+	msg DB "El resultado es: ", 0x0
+	msg2 db " °C"
+
 
 segment .bss
 	num_arg RESB 4
@@ -20,21 +24,20 @@ _start:
 	mov EBX, 1h			; Iniciamos EBX con 0
 
 ciclo:
+	mov eax, msg
+	call sprint
 	pop EAX				; Obtenemos el valor
 	call atoi			; Lo convertimos a entero
-	add EBX, EAX		; Sumamos los valores
+	call ftoc			; convertimos en esa madre
+	call iprint
+	mov eax, msg2
+	call sprintLF
 	dec ECX				; Decrementamos el # de argumentos en 1
 	cmp ECX,0			; Checa si todavia hay valores
 	jnz ciclo 			; Sigue si todavia hay valores
+	jmp quit
 
-fin:
-	mov EAX, msg 		; Movemos el mensaje del promedio
-	call sprint			; Imprimimos
-	mov EAX, EBX		; Movemos el total de la suma para imprimirlo
-	mov EBX, [num_arg]	; Mover el numero de argumentos al registro EBX
-	idiv EBX			; Dividimos entre ECX
-	call iprintLF		; Imprimimos el valor de la suma
-	jmp quit	
+	
 
 zeroargs:
 	jmp quit
