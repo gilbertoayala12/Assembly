@@ -138,11 +138,29 @@ ctof:
 	ret
 
 
+stringcopy:
+	push ecx 	;salvamos ecx en stach
+	push ebx 
+	mov ebx, 0
+	mov ecx, 0
+	mov ebx, eax
+.sigcar:
+	mov BL, byte[Eax]
+	mov byte[esi+ecx], bl	;movemos un caracter
+	cmp byte[eax],0	;comparamos el byte que es a ver si es 0
+	jz .finalizar 	; jump if zero a finalizado
+	inc eax			; inc el acomulador
+	inc ecx
+	jmp .sigcar
 
+.finalizar:
+	pop ebx
+	pop ecx
+	ret
 
 
 
 quit:
 	mov EAX, sys_exit 	; sys_exit
 
-	int 0x80 			; llamada a kernels 
+	int 0x80 			; llamada a kernel
