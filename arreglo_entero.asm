@@ -31,7 +31,7 @@ ciclo:
 	pop eax
 	call atoi 
 	mov [esi], eax
-	add ebx, [esi]
+	; add ebx, [esi]
 	add esi, 4
 	dec ecx 
 	cmp ecx,0
