@@ -137,6 +137,11 @@ ctof:
 	add eax, 32
 	ret
 
+LeerTexto:
+	mov eax, sys_read
+	mov ebx, stdin
+	int 0x80
+	ret
 
 stringcopy:
 	push ecx 	;salvamos ecx en stach
@@ -157,7 +162,7 @@ stringcopy:
 	pop ebx
 	pop ecx
 	ret
-
+; leer funcion acepta buffer en ecx, acepta longitudde buffer en edx
 
 
 quit:
