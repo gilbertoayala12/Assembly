@@ -38,7 +38,7 @@ _start:
 	call LeerTexto	;llama leer texto
 	mov eax, buffer_edad;mueve el buffer de l;a edad a eax
 	call atoi	; llama atoi para hacerlo integer
-	mov [edad], eax	; mueves lo del buffer que estaba en eax a edad para tenerlo guardado 
+	mov [edad], eax	; mueves lo del buffer que estaba en eax a edad para tenerlo guardado  
 
 	mov eax, nombre_mensaje
 	call sprint
