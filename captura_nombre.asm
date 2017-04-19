@@ -34,11 +34,11 @@ _start:
 	mov eax, msg_edad ; imprime mensaje edad
 	call sprint
 	mov ecx, buffer_edad; buffer a ecx
-	mov edx, edad_len
-	call LeerTexto
-	mov eax, buffer_edad
-	call atoi
-	mov [edad], eax
+	mov edx, edad_len ; guarda la longitud del buffer en edx
+	call LeerTexto	;llama leer texto
+	mov eax, buffer_edad;mueve el buffer de l;a edad a eax
+	call atoi	; llama atoi para hacerlo integer
+	mov [edad], eax	; mueves lo del buffer que estaba en eax a edad para tenerlo guardado 
 
 	mov eax, nombre_mensaje
 	call sprint

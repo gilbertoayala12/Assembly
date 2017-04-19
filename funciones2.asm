@@ -144,7 +144,7 @@ LeerTexto:
 	ret
 
 stringcopy:
-	push ecx 	;salvamos ecx en stach
+	push ecx 	;salvamos ecx en stack
 	push ebx 
 	mov ebx, 0
 	mov ecx, 0
