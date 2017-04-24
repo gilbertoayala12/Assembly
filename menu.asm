@@ -46,8 +46,7 @@ cmp eax, 3
 je opcion3
 cmp eax, 0
 je opcion0
-cmp eax, 4
-jg opcion_no_valida
+jmp opcion_no_valida
 
 opcion1:
 mov eax, msg_nombre
