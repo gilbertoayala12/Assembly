@@ -3,10 +3,14 @@ sys_read equ 3
 sys_write equ 4
 sys_open equ 5
 sys_close equ 6
+sys_sync equ 36
 O_RDONLY equ 0
+sys_create equ 8
+O_RDWR equ 1 
 stdin equ 0
 stdout equ 1
 stderr equ 3
+
 slen:
 	push ebx
 	mov ebx, eax
@@ -166,7 +170,34 @@ stringcopy:
 	pop ecx
 	ret
 ; leer funcion acepta buffer en ecx, acepta longitudde buffer en edx
+; copystring
+copystring:
+	push ecx 	;salvamos ecx en stack
+	push ebx 
+	mov ebx, 0
+	mov ecx, 0
+	mov ebx, eax
+.sigcar:
+	mov BL, byte[Eax]
+	cmp bl, 0xA
+	je .salto
+	mov byte[esi+ecx], bl	;movemos un caracter
+	cmp byte[eax],0	;comparamos el byte que es a ver si es 0
+	jz .finalizar 	; jump if zero a finalizado
+	
+.salto:
+	inc eax
+	inc ecx
+	jmp .sigcar
 
+.finalizar:
+	pop ebx
+	pop ecx
+	ret
+
+
+
+; copystring
 
 quit:
 	mov EAX, sys_exit 	; sys_exit
