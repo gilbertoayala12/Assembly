@@ -4,7 +4,7 @@
 
 
 
-%include 'funciones2.asm'
+%include 'funciones2.asm' 
 
 segment .bss
 	buffer_nombre resb 20
