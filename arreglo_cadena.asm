@@ -17,8 +17,8 @@ _start:
 	pop eax 	; obtenemos el nombre del programa
 	dec ecx		; restamos 1 al numero de argumentos
 	mov edx, ecx
-	; mov edx, 0 	; ponemos en 0 edx
-	mov esi, array 	; la direccion de array a esi
+	
+	mov esi, array 	; la direccion de array a esi	
 
 ciclo:
 	pop eax
