@@ -13,7 +13,7 @@ segment .bss
 
 	buffer_archivo resb 2048
 	len_archivo equ $-buffer_archivo
-	array_nombre resb 60
+	
 	nombre resb 50
 	opcion resb 4
 	archivo resb 2048
@@ -22,6 +22,7 @@ segment .bss
 
 section .text
     global _start
+
 segment .data
 	msg_archivo DB "nombre del archivo: ",0x0
 
@@ -36,8 +37,10 @@ segment .data
 _start:
 	mov esi, array
 	push ecx
+
 	menu_inicio:
 		push esi
+
 		mov EAX,menu 			; Imprimimos el menu
 		call sprint
 
@@ -90,23 +93,25 @@ opcion1:
 
 
 opcion2:
-	pop ebx
-	mov esi, array
-	pop ecx 		;tener el numero de nombres guardados
-	push ecx  ; salvar el numero de nuevo
-
-
 	
-	printLoop:
-		mov eax, esi
-		call sprint
-		add esi, 10
-		dec ecx
-		cmp ecx, 0 
-		jne printLoop
+	 mov eax, msg_imprimirNombres
+    call sprintLF
+    pop ebx                         ; stack pointer in ebx
+    mov esi, array                  ; intialize esi
+    pop ecx                         ; get number of names saved
+    push ecx                        ; save number of names again
 
-	mov esi, ebx
-	jmp menu_inicio
+    ; print loop
+    prloop:
+        mov eax, esi			
+        call sprint
+        add esi,10
+        dec ecx
+        cmp ecx, 0
+        jne prloop
+
+    mov esi, ebx                    ; restore esi original pointer(will be pushed in display_menu)
+    jmp menu_inicio
 
 
 opcion3:
@@ -149,6 +154,7 @@ opcion3:
  ;====== Close file ======
     mov eax, sys_close
     int 0x80
+    pop esi
     jmp menu_inicio
 
 salida:
@@ -158,7 +164,7 @@ no_valido:
 	mov eax, mensaje_valido
 	call sprintLF
 	pop esi
-	jmp _start
+	jmp menu_inicio
 clearArray:
 	
 	jmp menu_inicio

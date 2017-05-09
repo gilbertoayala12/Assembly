@@ -144,11 +144,7 @@ ctof:
 	add eax, 32
 	ret
 
-LeerTexto:
-	mov eax, sys_read
-	mov ebx, stdin
-	int 0x80
-	ret
+
 
 stringcopy:
 	push ecx 	;salvamos ecx en stack
@@ -198,7 +194,11 @@ copystring:
 
 
 ; copystring
-
+LeerTexto:
+	mov eax, sys_read
+	mov ebx, stdin
+	int 0x80
+	ret
 quit:
 	mov EAX, sys_exit 	; sys_exit
 
