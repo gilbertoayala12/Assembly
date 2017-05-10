@@ -25,7 +25,7 @@ section .text
 
 segment .data
 	msg_archivo DB "nombre del archivo: ",0x0
-
+	dummy db "c",0x0
 	msg_imprimirNombres db "nombres guardados", 0x0
 	msg_leyendo db "Archivo: ",0x0 
 	msg_alumo db "Introduzca nombre: ",0x0
@@ -73,8 +73,11 @@ _start:
 
 
 opcion1:
+	
+	
 	mov eax, msg_alumo
 	call sprint 
+	
 	mov ecx, buffer_nombre
 	mov edx, len_nombre
 	call LeerTexto
@@ -82,19 +85,22 @@ opcion1:
 
 	pop esi 		; obteiene el pointer del array_nombr
 	call stringcopy
-	add esi, 10
+	add esi, 50
 
 	pop ecx
 	add ecx, 1 
 	push ecx
-
+	mov edi, buffer_nombre
+	mov ecx, 50
+	xor eax, eax
+	rep stosb
 	jmp menu_inicio
 
 
 
 opcion2:
 	
-	 mov eax, msg_imprimirNombres
+	mov eax, msg_imprimirNombres
     call sprintLF
     pop ebx                         ; stack pointer in ebx
     mov esi, array                  ; intialize esi
@@ -105,7 +111,7 @@ opcion2:
     prloop:
         mov eax, esi			
         call sprint
-        add esi,10
+        add esi,50
         dec ecx
         cmp ecx, 0
         jne prloop
