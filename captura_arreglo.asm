@@ -106,7 +106,8 @@ opcion2:
     mov esi, array                  ; intialize esi
     pop ecx                         ; get number of names saved
     push ecx                        ; save number of names again
-
+    cmp ecx, 0
+    jz noValues
     ; print loop
     prloop:
         mov eax, esi			
@@ -171,9 +172,7 @@ no_valido:
 	call sprintLF
 	pop esi
 	jmp menu_inicio
-clearArray:
-	
-	jmp menu_inicio
+
 noValues:
 	mov eax, msg_empty
 	call sprintLF
